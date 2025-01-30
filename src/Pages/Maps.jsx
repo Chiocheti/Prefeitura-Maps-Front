@@ -1,5 +1,5 @@
 import { APIProvider, Map, AdvancedMarker, Pin, InfoWindow } from "@vis.gl/react-google-maps";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import PlacesAutocomplete from '../Components/PlacesAutocomplete'
 import CreateCall from "../Components/CreateCall";
@@ -9,19 +9,29 @@ import moment from "moment";
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const MAP_ID = import.meta.env.VITE_PUBLIC_MAP_ID;
 
-const libs = ["places"];
+const LIBS = ["places"];
+
+const INITIAL_CAMERA = {
+  center: { lat: -21.985837, lng: -46.792604 },
+  zoom: 15
+};
+
+const oneWeek = moment().subtract(7, 'days');
+const oneMonth = moment().subtract(1, 'months');
 export default function Maps() {
   const [calls, setCalls] = useState([]);
   const [find, setFind] = useState(null);
   const [selected, setSelected] = useState(null);
-  const [center, setCenter] = useState({ lat: -21.965840, lng: -46.813547 });
+  const [cameraProps, setCameraProps] = useState(INITIAL_CAMERA);
 
-  const oneWeek = moment().subtract(7, 'days');
-  const oneMonth = moment().subtract(1, 'months');
+  const handleCameraChange = useCallback((ev) => {
+    setCameraProps(ev.detail)
+  }
+  );
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: libs,
+    libraries: LIBS,
   });
 
   useEffect(() => {
@@ -44,7 +54,10 @@ export default function Maps() {
       console.log("Atualizando calls:", data);
       setCalls(data);
       setFind();
-      setCenter(newCenter);
+      setCameraProps({
+        center: newCenter,
+        zoom: 12
+      });
     } catch (error) {
       console.log(error);
     }
@@ -64,14 +77,25 @@ export default function Maps() {
       <div style={{ width: find ? '75vw' : '100vw', height: '100vh' }}>
         <APIProvider apiKey={API_KEY}>
           <div>
-            <PlacesAutocomplete setFind={setFind}></PlacesAutocomplete>
+            <PlacesAutocomplete setFind={setFind} setCameraProps={setCameraProps}></PlacesAutocomplete>
           </div>
 
           <Map
             mapId={MAP_ID}
-            defaultCenter={center}
-            defaultZoom={12}
-            style={{ width: "100%", height: "100%" }}
+            {...cameraProps}
+            onCameraChanged={handleCameraChange}
+            // colorScheme="DARK" // 'LIGHT' | 'DARK'
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            styles={[
+              {
+                featureType: "poi",
+                elementType: "all",
+                stylers: [{ visibility: "off" }],
+              }
+            ]}
           >
             {
               calls.map((call) => (
