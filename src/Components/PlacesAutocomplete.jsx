@@ -1,7 +1,7 @@
 import { ComboboxInput, Combobox, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 
-export default function PlacesAutocomplete({ setFind }) {
+export default function PlacesAutocomplete({ setFind, setCameraProps }) {
 
   const {
     ready,
@@ -19,6 +19,10 @@ export default function PlacesAutocomplete({ setFind }) {
 
     const { lat, lng } = getLatLng(result);
     setFind({ lat, lng });
+    setCameraProps({
+      center: { lat, lng },
+      zoom: 18
+    })
   }
 
   return (
