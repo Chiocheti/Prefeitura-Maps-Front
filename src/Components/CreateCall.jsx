@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import moment from 'moment';
 
 import { api } from '../services/api';
+import './CreateCall.css'
 
 const schema = Yup.object({
   service: Yup.string('').required('Campo Obrigatório'),
@@ -38,7 +39,7 @@ export default function CreateCall({ find: { lat, lng }, findCalls }) {
 
   return (
     <form onSubmit={handleSubmit(createCall)}>
-      <label htmlFor="service">Serviço</label>
+      <label htmlFor="service">Serviço: </label>
       <select {...register("service")}>
         <option value="" disabled>Selecione</option>
         <option value={'Corte de Arvore'}>Corte de Arvore</option>
@@ -49,7 +50,7 @@ export default function CreateCall({ find: { lat, lng }, findCalls }) {
       </select>
       <p style={{ color: "red" }}>{errors.service?.message}</p>
 
-      <label htmlFor="priority">Prioridade</label>
+      <label htmlFor="priority">Prioridade: </label>
       <input type="number" max={10} min={1} {...register('priority')} />
       <p style={{ color: "red" }}>{errors.priority?.message}</p>
 

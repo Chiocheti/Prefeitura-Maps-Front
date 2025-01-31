@@ -1,0 +1,45 @@
+.combobox_container {
+  position: absolute;
+  top: 1rem;
+  margin-left: .6rem;
+  z-index: 3;
+}
+
+.combobox_input, .combobox_popover {
+  color: #0F0404;
+  background-color: #F4F8FF;
+  border-radius: 20px;
+  box-shadow: 1px 1px 10px #0f040480;
+}
+
+.combobox_input {
+  height: 2.5rem;
+  width: 17rem;
+  padding: 0 1rem;
+
+  font-size: 1.1rem;
+  border: none;
+}
+
+.combobox_input:focus {
+  outline: none;
+}
+
+.combobox_popover {
+  margin-top: .6rem;
+}
+
+.combobox_list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.combobox_option {
+  padding: 0 1rem;
+}
+
+.combobox_option:hover {
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #0000001c;
+}

@@ -1,0 +1,38 @@
+.create_call_wrapper {
+  display: flex;
+  justify-content: center;
+
+  width: 15vw;
+  height: 98vh;
+  box-shadow: 1px 1px 10px #0f040480;
+  z-index: 3;
+
+  font-size: 1.3rem;
+  padding-top: 1rem;
+
+  color: #0F0404;
+  background-color: #f4f8ff;;
+}
+
+select {
+  background: none;
+  color: #0F0404;
+  font-size: 1.3rem;
+  border: 1px solid #0F0404;
+  border-radius: 20px;
+  padding: 0 0 0 .5rem;
+}
+
+input {
+  background: none;
+  color: #0F0404;
+  font-size: 1.3rem;
+  border: 1px solid #0F0404;
+  border-radius: 20px;
+  padding: 0 .5rem 0 .5rem;
+}
+
+button {
+  margin-left: auto;
+  width: 100%;
+}
