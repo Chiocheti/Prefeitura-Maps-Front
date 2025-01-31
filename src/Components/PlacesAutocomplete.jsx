@@ -1,14 +1,24 @@
-import { ComboboxInput, Combobox, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+import {
+  ComboboxInput,
+  Combobox,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from "@reach/combobox";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
+
+import './PlaceAutocomplete.css'
 
 export default function PlacesAutocomplete({ setFind, setCameraProps }) {
-
   const {
     ready,
     value,
     setValue,
     suggestions: { status, data },
-    clearSuggestions
+    clearSuggestions,
   } = usePlacesAutocomplete();
 
   async function handleSelect(address) {
@@ -21,23 +31,30 @@ export default function PlacesAutocomplete({ setFind, setCameraProps }) {
     setFind({ lat, lng });
     setCameraProps({
       center: { lat, lng },
-      zoom: 18
-    })
+      zoom: 18,
+    });
   }
 
   return (
-    <Combobox onSelect={handleSelect}>
-      <ComboboxInput
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        disabled={!ready}
-        placeholder="Search..." />
+    <>
+      <Combobox onSelect={handleSelect} className='combobox_container'>
+        <ComboboxInput
+          className="combobox_input"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          disabled={!ready}
+          placeholder="Search..."
+        />
 
-      <ComboboxPopover>
-        <ComboboxList>
-          {status === 'OK' && data.map(({ place_id, description }) => <ComboboxOption key={place_id} value={description} />)}
-        </ComboboxList>
-      </ComboboxPopover>
-    </Combobox>
-  )
+        <ComboboxPopover className="combobox_popover">
+          <ComboboxList className="combobox_list">
+            {status === "OK" &&
+              data.map(({ place_id, description }) => (
+                <ComboboxOption className="combobox_option" key={place_id} value={description} />
+              ))}
+          </ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
+    </>
+  );
 }
