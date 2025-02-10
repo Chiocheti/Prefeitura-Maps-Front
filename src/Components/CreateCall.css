@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
 
-  width: 15vw;
+  width: 20vw;
   height: 98vh;
   box-shadow: 1px 1px 10px #0f040480;
   z-index: 3;
@@ -12,6 +12,12 @@
 
   color: #0F0404;
   background-color: #f4f8ff;;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 select {
@@ -35,4 +41,5 @@ input {
 button {
   margin-left: auto;
   width: 100%;
+  margin-top: 10px;
 }
