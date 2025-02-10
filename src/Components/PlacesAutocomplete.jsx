@@ -11,8 +11,9 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 
 import './PlaceAutocomplete.css'
+import { useMap } from "@vis.gl/react-google-maps";
 
-export default function PlacesAutocomplete({ setFind, setCameraProps }) {
+export default function PlacesAutocomplete({ setPoint }) {
   const {
     ready,
     value,
@@ -21,6 +22,8 @@ export default function PlacesAutocomplete({ setFind, setCameraProps }) {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
+  const map = useMap();
+
   async function handleSelect(address) {
     setValue(address, false);
     clearSuggestions();
@@ -28,11 +31,9 @@ export default function PlacesAutocomplete({ setFind, setCameraProps }) {
     const [result] = await getGeocode({ address });
 
     const { lat, lng } = getLatLng(result);
-    setFind({ lat, lng });
-    setCameraProps({
-      center: { lat, lng },
-      zoom: 18,
-    });
+    setPoint({ lat, lng });
+    map.setCenter({ lat, lng });
+    map.setZoom(18);
   }
 
   return (
@@ -41,7 +42,10 @@ export default function PlacesAutocomplete({ setFind, setCameraProps }) {
         <ComboboxInput
           className="combobox_input"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => {
+            setValue(e.target.value)
+          }
+          }
           disabled={!ready}
           placeholder="Search..."
         />

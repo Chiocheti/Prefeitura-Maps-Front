@@ -20,6 +20,8 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
     "use-places-autocomplete": "^4.0.1",
+    "use-supercluster": "^1.2.0",
+    "uuid": "^11.0.5",
     "yup": "^1.6.1"
   },
   "devDependencies": {
