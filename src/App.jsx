@@ -1,8 +1,8 @@
-import Maps from "./Pages/Maps"
+import Maps02 from "./Pages/Maps02"
 
 function App() {
   return (
-    <Maps></Maps>
+    <Maps02></Maps02>
   )
 }
 
