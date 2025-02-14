@@ -12,6 +12,7 @@ import RenderTrees from "../Components/Trees/RenderTrees";
 import PlacesAutocomplete from "../Components/PlacesAutocomplete";
 import CreateCall from "../Components/CreateCall";
 import RenderTrash from "../Components/Trash/RenderTrash";
+import "./InfoWindow.css";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const MAP_ID = import.meta.env.VITE_PUBLIC_MAP_ID;
@@ -19,8 +20,7 @@ const LIBS = ["places"];
 const DEFAULT_MAP_VALUES = {
   position: { lat: -21.97670490190296, lng: -46.78934397283814 },
   zoom: 15,
-}
-
+};
 
 export default function Maps02() {
   const [point, setPoint] = useState();
@@ -83,26 +83,24 @@ export default function Maps02() {
 
       <div style={{ width: point ? "85vw" : "100vw", height: "100vh" }}>
         <APIProvider apiKey={API_KEY}>
-          <div style={{ display: 'flex', width: '100%', height: '10%', justifyContent: 'center' }}>
-            <button onClick={() => setShowTrees((p) => !p)} >
-              {showTrees ? 'Esconder Arvores' : 'Mostrar Arvores'}
+          <div className="btnsContainer">
+            <button className="btnsShow" onClick={() => setShowTrees((p) => !p)}>
+              {showTrees ? "Esconder Arvores" : "Mostrar Arvores"}
             </button>
-            <h3>
-              {zoom}
-            </h3>
-            <button onClick={() => setShowTrash((p) => !p)} >
-              {showTrash ? 'Esconder pontos de coleta' : 'Mostrar pontos de coleta'}
+            <button className="btnsShow" onClick={() => setShowTrash((p) => !p)}>
+              {showTrash
+                ? "Esconder pontos de coleta"
+                : "Mostrar pontos de coleta"}
             </button>
           </div>
-          <PlacesAutocomplete
-            setPoint={setPoint}
-          />
-          <div style={{ width: '100%', height: '90%' }}>
+          <PlacesAutocomplete setPoint={setPoint} />
+          <div style={{ width: "100%", height: "100%" }}>
             <Map
               mapId={MAP_ID}
               mapTypeControlOptions={{
                 position: ControlPosition.INLINE_END_BLOCK_START,
               }}
+              fullscreenControl={false}
               onClick={handleCreatePoint}
               colorScheme="DARK"
               defaultCenter={DEFAULT_MAP_VALUES.position}
@@ -117,26 +115,35 @@ export default function Maps02() {
                 ]);
               }}
             >
+              <RenderTrees
+                trees={trees}
+                bounds={bounds}
+                zoom={zoom}
+                showTrees={showTrees}
+              />
 
-              <RenderTrees trees={trees} bounds={bounds} zoom={zoom} showTrees={showTrees} />
-
-              {
-                trash.map((element) => (
-                  <RenderTrash key={element.id} trash={element} showTrash={showTrash} />
-                ))
-              }
-
+              {trash.map((element) => (
+                <RenderTrash
+                  key={element.id}
+                  trash={element}
+                  showTrash={showTrash}
+                />
+              ))}
 
               {point && (
-                <AdvancedMarker position={{ lat: point.lat, lng: point.lng }} onClick={() => setPoint(null)}>
+                <AdvancedMarker
+                  position={{ lat: point.lat, lng: point.lng }}
+                  onClick={() => setPoint(null)}
+                >
                   <Pin />
                 </AdvancedMarker>
               )}
-
             </Map>
           </div>
         </APIProvider>
       </div>
     </div>
-  ) : <div>Loading...</div>;
-};
+  ) : (
+    <div>Loading...</div>
+  );
+}

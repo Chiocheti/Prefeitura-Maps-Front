@@ -1,5 +1,6 @@
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import "./PlaceAutocomplete.css";
+import { useMap } from "@vis.gl/react-google-maps";
 
 
 export default function PlacesAutocomplete({ setPoint }) {
