@@ -1,16 +1,5 @@
-import {
-  ComboboxInput,
-  Combobox,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-
-import './PlaceAutocomplete.css'
+import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+import "./PlaceAutocomplete.css";
 
 export default function PlacesAutocomplete({ setFind, setCameraProps }) {
   const {
@@ -37,24 +26,30 @@ export default function PlacesAutocomplete({ setFind, setCameraProps }) {
 
   return (
     <>
-      <Combobox onSelect={handleSelect} className='combobox_container'>
-        <ComboboxInput
+      <div className="combobox_container">
+        <input
+          type="text"
           className="combobox_input"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           disabled={!ready}
           placeholder="Search..."
         />
-
-        <ComboboxPopover className="combobox_popover">
-          <ComboboxList className="combobox_list">
+        <div className="combobox_popover">
+          <ul className="combobox_list">
             {status === "OK" &&
               data.map(({ place_id, description }) => (
-                <ComboboxOption className="combobox_option" key={place_id} value={description} />
+                <li
+                  className="combobox_option"
+                  key={place_id}
+                  onClick={() => handleSelect(description)}
+                >
+                  {description}
+                </li>
               ))}
-          </ComboboxList>
-        </ComboboxPopover>
-      </Combobox>
+          </ul>
+        </div>
+      </div>
     </>
   );
 }
