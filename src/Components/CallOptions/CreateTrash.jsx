@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import moment from 'moment';
 import { api } from '../../services/api';
+import './CreateTrash.css';
 
 const schema = Yup.object({
   priority: Yup.number().typeError('Seleciona a prioridade').required('Campo Obrigatório'),
@@ -39,9 +40,9 @@ export default function CreateTrash({ lat, lng, reloadTrash }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(createTrash)}>
-      <label htmlFor="priority">Prioridade: </label>
-      <select {...register("priority")}>
+    <form className='formService' onSubmit={handleSubmit(createTrash)}>
+      <label className='selectPriority' htmlFor="priority">Prioridade: </label>
+      <select className='typeSelect' {...register("priority")}>
         <option value="" disabled>Selecione</option>
         <option value={1}>1</option>
         <option value={2}>2</option>
@@ -53,11 +54,11 @@ export default function CreateTrash({ lat, lng, reloadTrash }) {
       <p style={{ color: "red" }}>{errors.priority?.message}</p>
 
       <label htmlFor="priority">Tipo de resíduos: </label>
-      <input type="text" {...register('type')} />
+      <input style={{ color: '#FFF'}} type="text" {...register('type')} />
       <p style={{ color: "red" }}>{errors.type?.message}</p>
 
       <label htmlFor="priority">Ultima Limpeza: </label>
-      <input type="date" {...register('lastClean')} />
+      <input className='inputDate' type="date" {...register('lastClean')} />
       <p style={{ color: "red" }}>{errors.lastClean?.message}</p>
 
       <button type='submit' style={{ backgroundColor: 'black', color: 'white' }}>

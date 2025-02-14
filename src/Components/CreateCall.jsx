@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import CreateTrash from './CallOptions/CreateTrash';
-
+import './CreateCall.css'
 
 export default function CreateCall({ point: { lat, lng }, reloadTrash }) {
 
   const [callType, setCallType] = useState(0);
 
   return (
-    <div>
-      <label htmlFor="service">Serviço: </label>
-      <select value={callType} onChange={(e) => setCallType(e.target.value)}>
+    <div className='firstFormContainer'>
+      <p className='servicesLabel'>Serviço: </p>
+      <select className="typeSelect"value={callType} onChange={(e) => setCallType(e.target.value)}>
         <option value={0} disabled>Selecione</option>
         <option value={1}>Recolhimento de Resíduos</option>
         <option value={2}>Calçada quebrada</option>
