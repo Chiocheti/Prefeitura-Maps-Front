@@ -1,5 +1,10 @@
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import "./PlaceAutocomplete.css";
+
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
+
 
 export default function PlacesAutocomplete({ setFind, setCameraProps }) {
   const {
